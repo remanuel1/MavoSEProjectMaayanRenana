@@ -7,21 +7,24 @@ import java.util.Objects;
  * there are point and vector
  */
 public class Ray {
-    Point3D _p0;
-    Vector _dir;
+    final Point3D _p0;
+    final Vector _dir;
 
     //constructor
     public Ray(Point3D p0, Vector dir) {
-        double toNormal = Math.sqrt(p0._x._coord * p0._x._coord + p0._y._coord * p0._y._coord + p0._z._coord * p0._z._coord);
-        if (toNormal!=1) {
-            double pXTemp = p0._x._coord * (1 / toNormal);
-            double pYTemp = p0._y._coord * (1 / toNormal);
-            double pZTemp = p0._z._coord * (1 / toNormal);
-            _p0 = new Point3D(pXTemp, pYTemp, pZTemp);
-        }
-        else
-            _p0 = p0;
-        _dir = dir;
+        _dir = dir.normalize();
+        _p0 = p0;
+        //double toNormal = Math.sqrt(p0._x._coord * p0._x._coord + p0._y._coord * p0._y._coord + p0._z._coord * p0._z._coord);
+        //if (toNormal!=1) {
+
+        //    double pXTemp = p0._x._coord * (1 / toNormal);
+        //    double pYTemp = p0._y._coord * (1 / toNormal);
+        //    double pZTemp = p0._z._coord * (1 / toNormal);
+       //     _p0 = new Point3D(pXTemp, pYTemp, pZTemp);
+       // }
+       // else
+
+
     }
 
     public Point3D getP0() {
@@ -29,7 +32,7 @@ public class Ray {
     }
 
     public Vector getDir() {
-        return _dir;
+        return new Vector(_dir._head);
     }
 
     @Override

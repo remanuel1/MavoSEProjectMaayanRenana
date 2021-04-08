@@ -47,7 +47,7 @@ public class Vector {
     }
 
     //scale func. return new vector Scalar multiplication
-    public Vector scale(int num){
+    public Vector scale(double num){
         return new Vector(
                 _head._x._coord * num,
                 _head._y._coord * num,
