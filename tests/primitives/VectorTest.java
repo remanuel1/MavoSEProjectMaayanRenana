@@ -16,6 +16,9 @@ class VectorTest {
     Vector v2 = new Vector(-2, -4, -6);
     Vector v3 = new Vector(0, 3, -2);
 
+    /**
+     * test add of vector v1+v2
+     */
     @Test
     void testAdd() {
         Vector vr = v1.add(v2);
@@ -31,6 +34,9 @@ class VectorTest {
 
     }
 
+    /**
+     * test subtract of vector v1-v2
+     */
     @Test
     void testSubtract() {
         Vector vr = v1.subtract(v2);
@@ -44,6 +50,9 @@ class VectorTest {
         }
     }
 
+    /**
+     * test scale of vr = v1*4
+     */
     @Test
     void testScale() {
         Vector vr = v1.scale(4);
@@ -57,6 +66,9 @@ class VectorTest {
         }
     }
 
+    /**
+     * test dot Product of vector v1*v3 and v1*v2+28 not be vector (0,0,0)
+     */
     @Test
     void testDotProduct() {
 
@@ -65,13 +77,16 @@ class VectorTest {
 
     }
 
+    /**
+     * vector can not be zero vector - (0,0,0)
+     */
     @Test
     void testVectorZero(){
         assertThrows(IllegalArgumentException.class, ()-> new Vector(0,0,0), "nununu!");
     }
 
     /**
-     * Test method for {@link primitives.Vector#crossProduct(primitives.Vector)}.
+     * Test method for Cross Product
      */
     @Test
     public void testCrossProduct() {
@@ -102,13 +117,18 @@ class VectorTest {
         // } catch (Exception e) {}
     }
 
-
+    /**
+     * Test method for length Squared
+     */
     @Test
     void testLengthSquared() {
         assertTrue (isZero(v1.lengthSquared()-14), "lengthSquared() wrong value");
 
     }
 
+    /**
+     * Test method for length
+     */
     @Test
     void testLength() {
         Vector vCopy = new Vector(v1.getHead());
@@ -116,9 +136,11 @@ class VectorTest {
         assertTrue (isZero(vCopyNormalize.length() - 1), "ERROR: normalize() result is not a unit vector");
     }
 
+    /**
+     * Test method vector normalization vs vector length and cross-product
+     */
     @Test
     void testNormalize() {
-        // test vector normalization vs vector length and cross-product
 
         Vector vCopy = new Vector(v1.getHead());
         Vector vCopyNormalize = vCopy.normalize();
@@ -126,6 +148,9 @@ class VectorTest {
 
     }
 
+    /**
+     * Test method vector normalized vs vector
+     */
     @Test
     void testNormalized() {
         Vector u = v1.normalized();
