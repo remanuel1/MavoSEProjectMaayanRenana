@@ -14,7 +14,7 @@ class PlaneTest {
     public void testConstructor() {
         // ============ Equivalence Partitions Tests ==============
 
-        // TC01: Correct concave quadrangular with vertices in correct order
+        // TC01: Correct plane with vertices in correct order
         try {
             Plane p = new Plane(p1, p2, p3);
         } catch (IllegalArgumentException e) {
@@ -36,6 +36,9 @@ class PlaneTest {
 
     @Test
     void testGetNormal() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Correct plane with vertices in correct order
         try {
             Plane p = new Plane(p1, p2, p3);
             assertEquals(p._vector.length(), 1, "wrong normal");

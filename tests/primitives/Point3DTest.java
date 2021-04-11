@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class Point3DTest {
     Point3D p = new Point3D(1, 2, 3);
 
+    /**
+     * test of subtract point3D - point3D
+     */
     @Test
     void testSubtract() {
 
@@ -21,6 +24,9 @@ class Point3DTest {
 
     }
 
+    /**
+     * test of add point3D + point3D
+     */
     @Test
     void testAdd() {
 
@@ -33,12 +39,4 @@ class Point3DTest {
         }
     }
 
-    @Test
-    void testDistanceSquared() {
-
-    }
-
-    @Test
-    void testDistance() {
-    }
 }

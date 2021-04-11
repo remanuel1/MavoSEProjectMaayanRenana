@@ -30,10 +30,16 @@ public class Plane implements Geometry {
         _vector = vector.normalized(); //null
     }
 
+    /**
+     * @return plane's point
+     */
     public Point3D getPoint3D() {
         return _point3D;
     }
 
+    /**
+     * @return plane's vector
+     */
     public Vector getVector() {
         return _vector;
     }
@@ -45,6 +51,9 @@ public class Plane implements Geometry {
                 " vector:" + _vector;
     }
 
+    /**
+     * @return plane's normal
+     */
     @Override
     public Vector getNormal(Point3D point) {
         return _vector;

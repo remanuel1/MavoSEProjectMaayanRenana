@@ -17,6 +17,9 @@ public class Cylinder extends Tube{
         _height = height;
     }
 
+    /**
+     * @return height of cylinder
+     */
     public double getHeight() {
         return _height;
     }
@@ -29,6 +32,10 @@ public class Cylinder extends Tube{
                 ", radius=" + _radius;
     }
 
+    /**
+     * @param point
+     * @return normal of point in cylinder
+     */
     public Vector getNormal(Point3D point){
         return null;
     }

@@ -18,10 +18,16 @@ public class Sphere implements Geometry{
         _radius = radius;
     }
 
+    /**
+     * @return sphere's center point
+     */
     public Point3D getCenter() {
         return _center;
     }
 
+    /**
+     * @return sphere's radius
+     */
     public double getRadius() {
         return _radius;
     }
@@ -34,8 +40,13 @@ public class Sphere implements Geometry{
                 '}';
     }
 
+    /**
+     *
+     * @param p
+     * @return sphere's normal from point p
+     */
     public Vector getNormal(Point3D p){
-        Vector O_P = p.subtract(_center);
-        return O_P.normalize();
+        Vector O_P = p.subtract(_center); // O_P = point p - center point
+        return O_P.normalize(); // O_P normalize
     }
 }
