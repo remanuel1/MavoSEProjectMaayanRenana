@@ -86,4 +86,54 @@ public class Polygon implements Geometry {
 
         return plane.getNormal(point);
     }
+
+    /**
+     *
+     * @param ray
+     * @return Intersections point between ray and the polygon
+     */
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+
+        List<Point3D> result = plane.findIntersections(ray); // Intersections point between ray and plane
+
+        if (result == null) {
+            return result;
+        }
+
+        Point3D P0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        Point3D P1 = vertices.get(1);
+        Point3D P2 = vertices.get(0);
+
+        Vector v1 = P1.subtract(P0); // v1 = P1-P0
+        Vector v2 = P2.subtract(P0); // v2 = P2-P0
+
+        double sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+
+        if (isZero(sign)) {
+            return null; // ray into the plane
+        }
+
+        boolean positive = sign > 0;
+
+        //iterate through all vertices of the polygon
+        for (int i = vertices.size() - 1; i > 0; --i) {
+            v1 = v2;
+            v2 = vertices.get(i).subtract(P0);
+
+            sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+            if (isZero(sign)) {
+                return null;
+            }
+
+            if (positive != (sign > 0)) {
+                return null;
+            }
+        }
+
+        return result;
+
+    }
 }

@@ -79,4 +79,16 @@ public class Point3D {
     public double distance(Point3D p) {
         return Math.sqrt(distanceSquared(p));
     }
+
+    public double getX() {
+        return _x._coord;
+    }
+
+    public double getY() {
+        return _y._coord;
+    }
+
+    public double getZ() {
+        return _z._coord;
+    }
 }

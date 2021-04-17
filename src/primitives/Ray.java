@@ -2,6 +2,8 @@ package primitives;
 
 import java.util.Objects;
 
+import static primitives.Util.isZero;
+
 /**
  * Ray class.
  * there are point and vector
@@ -29,6 +31,13 @@ public class Ray {
 
     public Point3D getP0() {
         return _p0;
+    }
+
+    public Point3D getPoint(double delta ) {
+        if (isZero(delta)) {
+            return _p0;
+        }
+        return _p0.add(_dir.scale(delta));
     }
 
     public Vector getDir() {

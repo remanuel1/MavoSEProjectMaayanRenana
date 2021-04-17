@@ -1,7 +1,12 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
+
+import static primitives.Util.*;
 
 /**
  * Plane class implements Geometry interface
@@ -57,5 +62,49 @@ public class Plane implements Geometry {
     @Override
     public Vector getNormal(Point3D point) {
         return _vector;
+    }
+
+    /**
+     * @param ray
+     * @return Intersections point between ray and the plane
+     */
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+
+        Point3D P0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        Vector n = _vector;
+
+        if(_point3D.equals(P0)){
+            return null;
+        }
+
+        Vector P0_Q0 = _point3D.subtract(P0);
+
+        double mechane = alignZero(n.dotProduct(P0_Q0));
+
+        //
+        if (isZero(mechane)){
+            return null;
+        }
+
+        //mone
+        double nv = alignZero(n.dotProduct(v));
+
+        // ray is lying in the plane axis
+        if(isZero(nv)){
+            return null;
+        }
+
+        double  t = alignZero(mechane / nv);
+
+        if (t <=0){
+            return  null;
+        }
+        Point3D P = ray.getPoint(t);
+
+        return List.of(P);
+
     }
 }
