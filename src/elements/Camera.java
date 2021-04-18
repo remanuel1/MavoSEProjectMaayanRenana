@@ -35,9 +35,7 @@ public class Camera {
         return _vT0;
     }
 
-    public Vector getvUp() {
-        return _vUp;
-    }
+    public Vector getvUp() { return _vUp; }
 
     public Vector getvRight() {
         return _vRight;
@@ -47,7 +45,7 @@ public class Camera {
      *
      * @param width
      * @param height
-     * @return
+     * @return camera with new size of view plane - Builder pattern
      */
     public Camera setViewPlaneSize(double width, double height) {
 
@@ -59,13 +57,21 @@ public class Camera {
     /**
      *
      * @param distance
-     * @return
+     * @return camera with new distance - Builder pattern
      */
     public Camera setDistance(double distance) {
         _distance = distance;
         return this;
     }
 
+    /**
+     *
+     * @param nX - wight
+     * @param nY - height
+     * @param j - num pixels in column
+     * @param i -  num pixels in row
+     * @return ray that Through in pixel
+     */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i){
         Point3D Pc = _p0.add(_vT0.scale(_distance));
         double Ry = _height / nY;
@@ -75,15 +81,14 @@ public class Camera {
 
         Point3D Pij = Pc;
 
-
         if(isZero(Yi) && isZero(Xj)) {
+            // Pij = Pc
             return new Ray(_p0, Pij.subtract(_p0));
         }
 
         if(isZero(Xj)) {
             Pij = Pc.add(_vUp.scale(Yi));
             return new Ray(_p0, Pij.subtract(_p0));
-
         }
 
         if(isZero(Yi)) {
@@ -92,7 +97,6 @@ public class Camera {
         }
 
         Pij = Pc.add(_vRight.scale(Xj).add(_vUp.scale(Yi)));
-
         return new Ray(_p0, Pij.subtract(_p0));
     }
 }
