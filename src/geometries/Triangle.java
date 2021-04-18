@@ -17,6 +17,10 @@ public class Triangle extends Polygon{
         super(vertices);
     }
 
+    /**
+     * @param ray
+     * @return list of intersectables point with ray
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         return super.findIntersections(ray);

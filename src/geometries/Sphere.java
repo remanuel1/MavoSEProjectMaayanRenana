@@ -56,7 +56,6 @@ public class Sphere implements Geometry{
     }
 
     /**
-     *
      * @param ray
      * @return Intersections point between ray and the sphere
      */

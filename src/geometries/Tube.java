@@ -71,7 +71,7 @@ public class Tube implements Geometry{
 
     /**
      * @param ray
-     * @return intersection points
+     * @return list of intersectables points with ray
      */
     @Override
     public List<Point3D> findIntersections(Ray ray) {

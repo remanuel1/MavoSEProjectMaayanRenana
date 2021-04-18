@@ -18,9 +18,18 @@ public class Geometries implements Intersectable{
 
     }
 
+    /**
+     * add Intersectable that get in param to list of Intersectable
+     * @param geometries
+     */
     public void add(Intersectable... geometries){
         Collections.addAll(_intersectables, geometries);
     }
+
+    /**
+     * @param ray
+     * @return collection of Intersections point 3D
+     */
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
@@ -41,6 +50,9 @@ public class Geometries implements Intersectable{
         return result;
     }
 
+    /**
+     * @return get list of intersectables point
+     */
     public List<Intersectable> get_intersectables() {
         return _intersectables;
     }
