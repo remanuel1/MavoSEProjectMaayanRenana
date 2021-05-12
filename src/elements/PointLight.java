@@ -29,14 +29,14 @@ public class PointLight extends Light implements LightSource{
         double denominator, distance;
         distance = position.distance(p);
         denominator = kC + kL*distance + kQ*distance*distance;
-        return intensity.reduce(denominator);
+        return intensity.scale(1/denominator);
     }
 
     @Override
     public Vector getL(Point3D p) {
         if(p.equals(position))
             return null;
-        return position.subtract(p).normalized();
+        return p.subtract(position).normalized();
     }
 
     public PointLight setKc(double kC) {

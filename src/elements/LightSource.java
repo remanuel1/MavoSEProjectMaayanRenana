@@ -16,7 +16,7 @@ public interface LightSource {
 
     /**
      * @param p
-     * @return the vector of light
+     * @return the vector of light, normalized
      */
     public Vector getL(Point3D p);
 

@@ -53,29 +53,44 @@ public class BasicRayTracer extends RayTracerBase {
                 .add(calcLocalEffects(point, ray)));
     }
 
+    /**
+     * @param intersection
+     * @param ray
+     * @return color with local effect.
+     */
     private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
-        Vector v = ray.getDir();
-        Vector n = intersection.geometry.getNormal(intersection.point);
-        double nv = alignZero(n.dotProduct(v));
+        Vector v = ray.getDir(); //direction of ray
+        Vector n = intersection.geometry.getNormal(intersection.point); //normal of geometry and intersection point
+        double nv = alignZero(n.dotProduct(v)); // n*v
         if (isZero(nv)) {
             return Color.BLACK;
         }
-        Material material = intersection.geometry.getMaterial();
+        Material material = intersection.geometry.getMaterial(); //  material of geometry
         int nShininess = material.nShininess;
-        double kd = material.kD;
-        double ks = material.kS;
+        double kd = material.kD; //diffuse of material
+        double ks = material.kS; //specular of material
         Color color = Color.BLACK;
         for (LightSource lightSource : _scene.lights) {
-            Vector l = lightSource.getL(intersection.point);
-            double nl = alignZero(n.dotProduct(l));
+            Vector l = lightSource.getL(intersection.point).normalized(); // get vector between light and point
+            double nl = alignZero(n.dotProduct(l)); // n*l
             if (nl * nv > 0) { // sign(nl) == sing(nv)
-                Color lightIntensity = lightSource.getIntensity(intersection.point);
-                color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity));;
+                Color lightIntensity = lightSource.getIntensity(intersection.point); // intensity of the light
+                // add all the local effect to the color
+                color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity));
             }
         }
         return color;
     }
 
+    /**
+     * @param ks
+     * @param l
+     * @param n
+     * @param v
+     * @param nShininess
+     * @param lightIntensity
+     * @return Specular effect
+     */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
         Vector r = l.subtract(n.scale(2 * (l.dotProduct(n)))).normalized();
         double minusVr = v.scale(-1).dotProduct(r);
@@ -83,6 +98,13 @@ public class BasicRayTracer extends RayTracerBase {
 
     }
 
+    /**
+     * @param kd
+     * @param l
+     * @param n
+     * @param lightIntensity
+     * @return diffuse effect
+     */
     private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
         double factor = kd * Math.abs(l.dotProduct(n));
         return lightIntensity.scale(factor);
