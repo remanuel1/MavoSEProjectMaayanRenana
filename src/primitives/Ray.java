@@ -1,5 +1,6 @@
 package primitives;
 
+import geometries.Intersectable.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,6 +59,23 @@ public class Ray {
         for(Point3D point : points){
             if(point.distance(_p0) < max.distance(_p0)){
                 max = point;
+            }
+        }
+        return max;
+    }
+
+    /**
+     * @param intersections
+     * @return GeoPoint with the closest point.
+     */
+    public GeoPoint getClosestGeoPoint (List<GeoPoint> intersections){
+        if(intersections.size()==0) // the list is empty
+            return null;
+
+        GeoPoint max = intersections.get(0);
+        for(GeoPoint geoPoint : intersections){
+            if(geoPoint.point.distance(_p0) < max.point.distance(_p0)){
+                max = geoPoint;
             }
         }
         return max;

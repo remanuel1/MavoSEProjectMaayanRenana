@@ -13,7 +13,7 @@ import java.util.MissingResourceException;
  */
 public class Render {
     ImageWriter _imageWriter;
-    Scene _scene;
+    //Scene _scene;
     Camera _camera;
     RayTracerBase _rayTracerBase;
 
@@ -27,14 +27,16 @@ public class Render {
         return this;
     }
 
-    /**
-     * @param scene
-     * @return render with new value for scene
-     */
-    public Render setScene(Scene scene) {
-        _scene = scene;
-        return this;
-    }
+
+//    /**
+//     * @param scene
+//     * @return render with new value for scene
+//     */
+//    public Render setScene(Scene scene) {
+//        _scene = scene;
+//        return this;
+//    }
+
 
     /**
      *
@@ -51,7 +53,7 @@ public class Render {
      * @param rayTracerBase
      * @return render with new value for rayTracerBase
      */
-    public Render setRayTracerBase(RayTracerBase rayTracerBase) {
+    public Render setRayTracer(RayTracerBase rayTracerBase) {
         _rayTracerBase = rayTracerBase;
         return this;
     }
@@ -60,7 +62,7 @@ public class Render {
      * to check if all params have a value
      */
     public void renderImage(){
-        if(_camera == null || _scene == null || _imageWriter == null || _rayTracerBase== null){
+        if(_camera == null || _imageWriter == null || _rayTracerBase== null){
             throw new IllegalArgumentException("need to put values in all fields");
         }
         for (int i=0; i<_imageWriter.getNy(); i++){

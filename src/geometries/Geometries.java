@@ -7,53 +7,62 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Geometries implements Intersectable{
+public class Geometries implements Intersectable {
 
     private List<Intersectable> _intersectables = new LinkedList<>();
 
-    public Geometries(){ }
+    //public Geometries() {
+    //}
 
-    public Geometries(Intersectable... geometries){
+    public Geometries(Intersectable... geometries) {
         add(geometries);
 
     }
 
     /**
      * add Intersectable that get in param to list of Intersectable
+     *
      * @param geometries
      */
-    public void add(Intersectable... geometries){
+    public void add(Intersectable... geometries) {
         Collections.addAll(_intersectables, geometries);
     }
 
+
     /**
      * @param ray
-     * @return collection of Intersections point 3D
+     * @return Intersections GeoPoint between ray and the plane
      */
-
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        List<GeoPoint> intersections = null;
 
-        List<Point3D> result = null;
-        for (Intersectable item : _intersectables) {
-            //get intersections points of a particular item from _intersectables
-            List<Point3D> itempoints = item.findIntersections(ray);
-            if(itempoints!= null){
+        for (Intersectable geometry : _intersectables) {
+            List<GeoPoint> geoIntersections = geometry.findGeoIntersections(ray);
+            //if there are elements in geoIntersections – add them to intersections
+            if (geoIntersections != null) {
                 //first time initialize result to new LinkedList
-                if(result== null){
-                    result= new LinkedList<>();
+                if (intersections == null) {
+                    intersections = new LinkedList<>();
                 }
                 //add all item points to the resulting list
-                result.addAll(itempoints);
+                intersections.addAll(geoIntersections);
             }
+
         }
-        return result;
+        return intersections;
+
     }
 
-    /**
-     * @return get list of intersectables point
-     */
-    public List<Intersectable> get_intersectables() {
-        return _intersectables;
-    }
+        /**
+         * @return get list of intersectables point
+         */
+        public List<Intersectable> get_intersectables () {
+            return _intersectables;
+
+        }
+
+
+
+
 }

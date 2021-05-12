@@ -13,7 +13,7 @@ import static primitives.Util.*;
  * there are point - the center of sphere and radius
  * there are get, toString, getNormal func
  */
-public class Sphere implements Geometry{
+public class Sphere extends Geometry{
     final  Point3D _center;
     final  double _radius;
 
@@ -57,16 +57,15 @@ public class Sphere implements Geometry{
 
     /**
      * @param ray
-     * @return Intersections point between ray and the sphere
+     * @return Intersections geoPoint between ray and the sphere
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
-
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         Point3D P0 = ray.getP0();
         Vector v = ray.getDir();
         // P0 is equal to center point
         if(P0.equals(_center)) {
-            return List.of(_center.add(v.scale(_radius)));
+            return List.of(new GeoPoint(this, _center.add(v.scale(_radius))));
         }
         Vector U = _center.subtract(P0); // U = center-P0
         double tm = alignZero(v.dotProduct(U)); // tm = v*U
@@ -86,21 +85,21 @@ public class Sphere implements Geometry{
         if(t1>0 && t2>0){
             Point3D p1 = P0.add(v.scale(t1));
             Point3D p2 = P0.add(v.scale(t2));
-            return List.of(p1, p2);
+            return List.of(new GeoPoint(this ,p1),new GeoPoint(this, p2));
         }
 
         // t1 >0
         if(t1>0){
             Point3D p1 = P0.add(v.scale(t1));
-            return List.of(p1);
+            return List.of(new GeoPoint(this ,p1));
         }
 
         // t2>0
         if(t2>0){
-            Point3D p1 = P0.add(v.scale(t2));
-            return List.of(p1);
+            Point3D p2 = P0.add(v.scale(t2));
+            return List.of(new GeoPoint(this ,p2));
         }
-        
+
         return null;
     }
 }

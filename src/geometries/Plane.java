@@ -13,7 +13,7 @@ import static primitives.Util.*;
  * there are point in plane and normal vector to plane
  * there are get, toString, getNormal func
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     final Point3D _point3D;
     final Vector _vector;
 
@@ -66,10 +66,10 @@ public class Plane implements Geometry {
 
     /**
      * @param ray
-     * @return Intersections point between ray and the plane
+     * @return Intersections geoPoint between ray and the plane
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
 
         Point3D P0 = ray.getP0();
         Vector v = ray.getDir();
@@ -104,7 +104,6 @@ public class Plane implements Geometry {
         }
         Point3D P = ray.getPoint(t);
 
-        return List.of(P);
-
+        return List.of(new GeoPoint(this, P));
     }
 }
