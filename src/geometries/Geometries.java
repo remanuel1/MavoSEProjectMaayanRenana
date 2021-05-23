@@ -34,11 +34,11 @@ public class Geometries implements Intersectable {
      * @return Intersections GeoPoint between ray and the plane
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         List<GeoPoint> intersections = null;
 
         for (Intersectable geometry : _intersectables) {
-            List<GeoPoint> geoIntersections = geometry.findGeoIntersections(ray);
+            List<GeoPoint> geoIntersections = geometry.findGeoIntersections(ray,maxDistance);
             //if there are elements in geoIntersections – add them to intersections
             if (geoIntersections != null) {
                 //first time initialize result to new LinkedList

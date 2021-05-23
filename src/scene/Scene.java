@@ -11,7 +11,7 @@ public class Scene {
     public String _name;
     public Color _background=Color.BLACK;
     public AmbientLight _ambientLight = new AmbientLight(Color.BLACK, 0);
-    public Geometries _geometries;
+    public Geometries geometries;
     public List<LightSource> lights;
 
     /**
@@ -20,7 +20,7 @@ public class Scene {
      */
     public Scene(String name) {
         _name = name;
-        _geometries = new Geometries();
+        geometries = new Geometries();
         lights = new LinkedList<LightSource>();
     }
 
@@ -50,7 +50,7 @@ public class Scene {
      * @return this scene
      */
     public Scene setGeometries(Geometries geometries) {
-        _geometries = geometries;
+        this.geometries = geometries;
         return this;
     }
 

@@ -58,6 +58,10 @@ public interface Intersectable {
      * @param ray
      * @return Intersections GeoPoint between ray and the plane
      */
-    List<GeoPoint> findGeoIntersections (Ray ray);
+    List<GeoPoint> findGeoIntersections (Ray ray, double maxDistance);
+
+    default List<GeoPoint> findGeoIntersections (Ray ray){
+        return findGeoIntersections(ray,Double.POSITIVE_INFINITY);
+    }
 
 }

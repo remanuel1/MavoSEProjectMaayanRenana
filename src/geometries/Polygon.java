@@ -93,9 +93,9 @@ public class Polygon extends Geometry {
      * @return Intersections geoPoint between ray and the polygon
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
-        List<GeoPoint> result = plane.findGeoIntersections(ray); // Intersections point between ray and plane
+        List<GeoPoint> result = plane.findGeoIntersections(ray,maxDistance); // Intersections point between ray and plane
 
         if (result == null) {
             return null;
@@ -132,7 +132,6 @@ public class Polygon extends Geometry {
                 return null;
             }
         }
-
         return List.of(new GeoPoint(this, result.get(0).point));
 
     }

@@ -14,7 +14,7 @@ class SphereTest {
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: Correct sphere with vertices in correct order
-        Sphere s = new Sphere(new Point3D(1,1,1), 5);
+        Sphere s = new Sphere(5, new Point3D(1,1,1));
         assertEquals(s.getNormal(new Point3D(6,6,6)),
                 new Vector((Math.sqrt(3)/3), (Math.sqrt(3)/3), (Math.sqrt(3)/3)),
                 "Sphere - get normal not work");
@@ -23,7 +23,7 @@ class SphereTest {
 
     @Test
     void testFindIntersections() {
-        Sphere sphere = new Sphere(new Point3D(1, 0, 0), 1d);
+        Sphere sphere = new Sphere(1d, new Point3D(1, 0, 0));
 
         // ============ Equivalence Partitions Tests ==============
 

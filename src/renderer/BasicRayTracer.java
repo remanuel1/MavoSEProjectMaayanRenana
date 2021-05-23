@@ -1,11 +1,9 @@
 package renderer;
 
 import elements.LightSource;
-import geometries.*;
 import primitives.*;
 import scene.Scene;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.*;
@@ -31,7 +29,7 @@ public class BasicRayTracer extends RayTracerBase {
     @Override
     public Color traceRay(Ray ray) {
 
-        List<GeoPoint> allIntersections = _scene._geometries.findGeoIntersections(ray); //all intersection points
+        List<GeoPoint> allIntersections = _scene.geometries.findGeoIntersections(ray); //all intersection points
 
         if (allIntersections == null) { // if there is no intersection points
             return _scene._background; // return the background of scene
@@ -74,12 +72,24 @@ public class BasicRayTracer extends RayTracerBase {
             Vector l = lightSource.getL(intersection.point).normalized(); // get vector between light and point
             double nl = alignZero(n.dotProduct(l)); // n*l
             if (nl * nv > 0) { // sign(nl) == sing(nv)
-                Color lightIntensity = lightSource.getIntensity(intersection.point); // intensity of the light
-                // add all the local effect to the color
-                color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+                if (unshaded (lightSource,l,n,intersection)) {
+
+                    Color lightIntensity = lightSource.getIntensity(intersection.point); // intensity of the light
+                    // add all the local effect to the color
+                    color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+                }
             }
         }
         return color;
+    }
+
+    private boolean unshaded(LightSource light, Vector l, Vector n, GeoPoint intersection) {
+        Vector lightDirection = l.scale(-1); // from point to light source
+        Ray lightRay= new Ray(intersection.point, n,lightDirection);
+        List<GeoPoint> intersections = _scene.geometries
+                .findGeoIntersections(lightRay, light.getDistance(intersection.point));
+        return intersections == null;
+
     }
 
     /**

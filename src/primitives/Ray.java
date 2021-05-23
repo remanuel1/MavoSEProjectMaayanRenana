@@ -11,6 +11,8 @@ import static primitives.Util.isZero;
  * there are point and vector
  */
 public class Ray {
+    private static final double DELTA = 0.1;
+
     final Point3D _p0;
     final Vector _dir;
 
@@ -29,6 +31,12 @@ public class Ray {
        // else
 
 
+    }
+
+    public Ray(Point3D point, Vector n, Vector direction) {
+        Vector delta = n.scale(n.dotProduct(direction) > 0 ? DELTA : - DELTA);
+        _p0= point.add(delta);
+        _dir=direction;
     }
 
     public Point3D getP0() {

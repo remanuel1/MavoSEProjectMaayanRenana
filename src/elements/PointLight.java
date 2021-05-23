@@ -9,7 +9,7 @@ import primitives.Vector;
  */
 public class PointLight extends Light implements LightSource{
 
-    private Point3D position;
+    private final Point3D _position;
     private double kC = 1;
     private double kL = 0;
     private double kQ = 0;
@@ -21,22 +21,27 @@ public class PointLight extends Light implements LightSource{
      */
     public PointLight(Color intensity, Point3D position) {
         super(intensity);
-        this.position = position;
+        _position = position;
     }
 
     @Override
     public Color getIntensity(Point3D p) {
         double denominator, distance;
-        distance = position.distance(p);
+        distance = _position.distance(p);
         denominator = kC + kL*distance + kQ*distance*distance;
         return intensity.scale(1/denominator);
     }
 
     @Override
     public Vector getL(Point3D p) {
-        if(p.equals(position))
+        if(p.equals(_position))
             return null;
-        return p.subtract(position).normalized();
+        return p.subtract(_position).normalized();
+    }
+
+    @Override
+    public double getDistance(Point3D point) {
+        return _position.distance(point);
     }
 
     public PointLight setKc(double kC) {

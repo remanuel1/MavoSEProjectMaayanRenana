@@ -69,7 +69,7 @@ public class Plane extends Geometry {
      * @return Intersections geoPoint between ray and the plane
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
 
         Point3D P0 = ray.getP0();
         Vector v = ray.getDir();
@@ -99,7 +99,7 @@ public class Plane extends Geometry {
 
         double  t = alignZero(mechane / nv);
 
-        if (t <=0){
+        if (t <=0 || alignZero(t-maxDistance)>0){
             return  null;
         }
         Point3D P = ray.getPoint(t);

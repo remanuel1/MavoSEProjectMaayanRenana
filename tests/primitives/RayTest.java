@@ -45,8 +45,8 @@ class RayTest {
         List<GeoPoint> geoPoint = new LinkedList<>();
         Ray ray = new Ray(new Point3D(0,0,0), new Vector(1,1,1));
         GeoPoint g3 = new GeoPoint (new Triangle(new Point3D(2,2,3), new Point3D(3,0,0), new Point3D(0, 3, 0)), new Point3D(1.8,1.8,1.8));
-        GeoPoint g1 = new GeoPoint(new Sphere(new Point3D(2,2,3), 2), new Point3D(3.39, 3.39, 3.39));
-        GeoPoint g2 = new GeoPoint(new Sphere(new Point3D(2,2,3), 2), new Point3D(1.3, 1.3, 1.3));
+        GeoPoint g1 = new GeoPoint(new Sphere(2, new Point3D(2,2,3)), new Point3D(3.39, 3.39, 3.39));
+        GeoPoint g2 = new GeoPoint(new Sphere(2, new Point3D(2,2,3)), new Point3D(1.3, 1.3, 1.3));
         geoPoint.add(g1);
         geoPoint.add(g2);
         geoPoint.add(g3);
