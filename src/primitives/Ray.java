@@ -36,7 +36,7 @@ public class Ray {
     public Ray(Point3D point, Vector n, Vector direction) {
         Vector delta = n.scale(n.dotProduct(direction) > 0 ? DELTA : - DELTA);
         _p0= point.add(delta);
-        _dir=direction;
+        _dir=direction.normalized();
     }
 
     public Point3D getP0() {
@@ -51,7 +51,7 @@ public class Ray {
     }
 
     public Vector getDir() {
-        return new Vector(_dir._head);
+        return _dir;
     }
 
     /**
@@ -60,13 +60,16 @@ public class Ray {
      * @return Closest Point to _p0
      */
     public Point3D findClosestPoint (List<Point3D> points){
-        if(points.size()==0) // the list is empty
+        if(points==null) // the list is empty
             return null;
 
-        Point3D max = points.get(0);
+        Point3D max=null;
+        double distance= Double.MAX_VALUE;
         for(Point3D point : points){
-            if(point.distance(_p0) < max.distance(_p0)){
+            double d= point.distance(_p0);
+            if(d < distance){
                 max = point;
+                distance=d;
             }
         }
         return max;

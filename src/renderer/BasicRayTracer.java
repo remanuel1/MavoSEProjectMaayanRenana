@@ -1,6 +1,7 @@
 package renderer;
 
 import elements.LightSource;
+import geometries.Geometries;
 import primitives.*;
 import scene.Scene;
 
@@ -11,6 +12,10 @@ import static primitives.Util.*;
 import geometries.Intersectable.GeoPoint;
 
 public class BasicRayTracer extends RayTracerBase {
+
+    private static final double INITIAL_K = 1.0;
+    private static final int MAX_CALC_COLOR_LEVEL = 10;
+
 
     /**
      * constructor of ray tracer base
@@ -32,7 +37,7 @@ public class BasicRayTracer extends RayTracerBase {
         List<GeoPoint> allIntersections = _scene.geometries.findGeoIntersections(ray); //all intersection points
 
         if (allIntersections == null) { // if there is no intersection points
-            return _scene._background; // return the background of scene
+            return Color.BLACK; // return the background of scene
         }
         GeoPoint closestPoint = ray.getClosestGeoPoint(allIntersections); // find the closest point
         return calcColor(closestPoint, ray); // return the color of this closest point
@@ -45,11 +50,19 @@ public class BasicRayTracer extends RayTracerBase {
      * @param point
      * @return color of this point
      */
-    private Color calcColor(GeoPoint point, Ray ray) {
-        return _scene._ambientLight.getIntensity()
-                .add(point.geometry.getEmission()
-                .add(calcLocalEffects(point, ray)));
+    private Color calcColor(GeoPoint geoPoint, Ray ray) {
+        return calcColor(geoPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K)
+                .add(_scene._ambientLight.get_intensity());
     }
+
+    private Color calcColor(GeoPoint geoPoint, Ray ray, int level, double k) {
+    }
+
+//    private Color calcColor(GeoPoint point, Ray ray) {
+//        return _scene._ambientLight.get_intensity()
+//                .add(point.geometry.getEmission()
+//                .add(calcLocalEffects(point, ray)));
+//    }
 
     /**
      * @param intersection
@@ -76,7 +89,8 @@ public class BasicRayTracer extends RayTracerBase {
 
                     Color lightIntensity = lightSource.getIntensity(intersection.point); // intensity of the light
                     // add all the local effect to the color
-                    color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+                    color = color.add(calcDiffusive(kd, l, n, lightIntensity),
+                            calcSpecular(ks, l, n, v, nShininess, lightIntensity));
                 }
             }
         }

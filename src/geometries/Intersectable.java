@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,8 +12,8 @@ import java.util.stream.Collectors;
 public interface Intersectable {
 
     /**
-     *  GeoPoint is inner class
-     *  that connects a point of intersection to a shape
+     * GeoPoint is inner class
+     * that connects a point of intersection to a shape
      */
     public static class GeoPoint {
         public Geometry geometry;
@@ -20,6 +21,7 @@ public interface Intersectable {
 
         /**
          * constructor that get Geometry and Point
+         *
          * @param geometry
          * @param point
          */
@@ -30,6 +32,7 @@ public interface Intersectable {
 
         /**
          * equals between two GeoPoint
+         *
          * @param o
          * @return if they equals or not
          */
@@ -50,18 +53,21 @@ public interface Intersectable {
     default List<Point3D> findIntersections(Ray ray) {
         var geoList = findGeoIntersections(ray);
         return geoList == null ? null
-                : geoList.stream().map(gp -> gp.point).collect(Collectors.toList());
+                : geoList.stream()
+                .map(gp -> gp.point)
+                .collect(Collectors.toList());
     }
 
+    default List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+    }
 
     /**
      * @param ray
      * @return Intersections GeoPoint between ray and the plane
      */
-    List<GeoPoint> findGeoIntersections (Ray ray, double maxDistance);
+    List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 
-    default List<GeoPoint> findGeoIntersections (Ray ray){
-        return findGeoIntersections(ray,Double.POSITIVE_INFINITY);
-    }
+
 
 }

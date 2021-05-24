@@ -8,6 +8,8 @@ public class Material {
     public double kD = 0; //diffuse
     public double kS = 0; //specular
     public int nShininess = 0;
+    public double kR=0;
+    public double kT=0;
 
     /**
      * set the kD
@@ -26,6 +28,16 @@ public class Material {
      */
     public Material setKs(double kS) {
         this.kS = kS;
+        return this;
+    }
+
+    public Material setkR(double kR) {
+        this.kR = kR;
+        return this;
+    }
+
+    public Material setkT(double kT) {
+        this.kT = kT;
         return this;
     }
 

@@ -14,13 +14,15 @@ import static primitives.Util.*;
  * there are get, toString, getNormal func
  */
 public class Sphere extends Geometry {
-    final Point3D _center;
     final double _radius;
+    final Point3D _center;
+
 
     // constructor
     public Sphere(double radius, Point3D point3D) {
-        _center = point3D;
         _radius = radius;
+        _center = point3D;
+
     }
 
     /**
@@ -63,7 +65,7 @@ public class Sphere extends Geometry {
         Point3D P0 = ray.getP0();
         Vector v = ray.getDir();
         // P0 is equal to center point
-        if (P0.equals(_center)) {
+        if (P0.equals(_center) && alignZero(_radius-maxDistance)<=0) {
             return List.of(new GeoPoint(this, _center.add(v.scale(_radius))));
         }
         Vector U = _center.subtract(P0); // U = center-P0

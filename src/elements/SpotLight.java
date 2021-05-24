@@ -20,16 +20,8 @@ public class SpotLight extends PointLight {
 
     @Override
     public Color getIntensity(Point3D p) {
+       Color intensity= super.getIntensity(p);
         double factor = alignZero(Math.max(0, direction.dotProduct(getL(p))));
-        if (!isZero(factor)){
-            return super.getIntensity().scale(factor);
-        }
-        //throw new IllegalArgumentException("the angle is zero");
-        return Color.BLACK;
+       return intensity.scale(factor);
     }
-
-    //@Override
-    //public Vector getL(Point3D p) {
-    //    return direction.normalized();
-    //}
 }

@@ -6,21 +6,21 @@ abstract class Light {
     /**
      * abstract class for the light
      */
-    protected Color intensity;
+    protected final Color _intensity;
 
     /**
      * constructor for Light
      * @param intensity
      */
     protected Light(Color intensity) {
-        this.intensity = intensity;
+        _intensity = intensity;
     }
 
     /**
      * get the intensity of light
      * @return intensity
      */
-    public Color getIntensity() {
-        return intensity;
+    public Color get_intensity() {
+        return _intensity;
     }
 }
