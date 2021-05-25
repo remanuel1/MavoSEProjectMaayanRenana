@@ -80,7 +80,7 @@ public class Ray {
      * @return GeoPoint with the closest point.
      */
     public GeoPoint getClosestGeoPoint (List<GeoPoint> intersections){
-        if(intersections.size()==0) // the list is empty
+        if(intersections == null) // the list is empty
             return null;
 
         GeoPoint max = intersections.get(0);
