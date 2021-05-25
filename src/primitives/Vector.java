@@ -14,7 +14,10 @@ public class Vector {
         return _head;
     }
 
-    //constructor
+    /**
+     * constructor
+     * @param head
+     */
     public Vector(Point3D head) {
         if (ZERO.equals(head)) {
             throw new IllegalArgumentException("vector head caanot be point (0,0,0)");
@@ -22,7 +25,12 @@ public class Vector {
         _head = head;
     }
 
-    //constructor
+    /**
+     * constructor
+     * @param x
+     * @param y
+     * @param z
+     */
     public Vector(double x, double y, double z) {
         /*Point3D head = new Point3D(x,y,z);
         if(ZERO.equals(head)) {
