@@ -14,15 +14,17 @@ import static primitives.Util.*;
  * there are get, toString, getNormal func
  */
 public class Sphere extends Geometry {
-    final double _radius;
-    final Point3D _center;
+    private final double _radius;
+    private final Point3D _center;
 
-
-    // constructor
+    /**
+     * constructor
+     * @param radius
+     * @param point3D
+     */
     public Sphere(double radius, Point3D point3D) {
         _radius = radius;
         _center = point3D;
-
     }
 
     /**

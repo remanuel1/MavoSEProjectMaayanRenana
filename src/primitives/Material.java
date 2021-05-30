@@ -36,7 +36,7 @@ public class Material {
      * @param kR
      * @return this material
      */
-    public Material setkR(double kR) {
+    public Material setKr(double kR) {
         this.kR = kR;
         return this;
     }
@@ -46,7 +46,7 @@ public class Material {
      * @param kT
      * @return this material
      */
-    public Material setkT(double kT) {
+    public Material setKt(double kT) {
         this.kT = kT;
         return this;
     }
@@ -59,6 +59,14 @@ public class Material {
     public Material setShininess(int nShininess) {
         this.nShininess = nShininess;
         return this;
+    }
+
+    public double getKt() {
+        return kT;
+    }
+
+    public double getKs() {
+        return kS;
     }
 }
 

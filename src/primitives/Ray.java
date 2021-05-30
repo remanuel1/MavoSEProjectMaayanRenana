@@ -2,7 +2,6 @@ package primitives;
 
 import geometries.Intersectable.*;
 import java.util.List;
-import java.util.Objects;
 
 import static primitives.Util.isZero;
 
@@ -33,7 +32,7 @@ public class Ray {
 
     }
 
-    public Ray(Point3D point, Vector n, Vector direction) {
+    public Ray(Point3D point, Vector direction, Vector n) {
         Vector delta = n.scale(n.dotProduct(direction) > 0 ? DELTA : - DELTA);
         _p0= point.add(delta);
         _dir=direction.normalized();
