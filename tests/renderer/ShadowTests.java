@@ -12,6 +12,8 @@ import scene.Scene;
  * @author Dan
  */
 public class ShadowTests {
+
+    private double alpha = 10.0;
     private Scene scene = new Scene("Test scene");
     private Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
             .setViewPlaneSize(200, 200).setDistance(1000);
@@ -37,7 +39,7 @@ public class ShadowTests {
                 setImageWriter(new ImageWriter("shadowSphereTriangleInitial", 400, 400)) //
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 
@@ -66,7 +68,7 @@ public class ShadowTests {
                 .setImageWriter(new ImageWriter("shadowTrianglesSphere", 600, 600)) //
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 

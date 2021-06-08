@@ -17,6 +17,8 @@ import scene.Scene;
  * @author dzilb
  */
 public class ReflectionRefractionTests {
+
+    private double alpha = 10.0;
     private Scene scene = new Scene("Test scene");
 
     /**
@@ -42,7 +44,7 @@ public class ReflectionRefractionTests {
                 .setImageWriter(new ImageWriter("refractionTwoSpheres", 500, 500)) //
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 
@@ -81,7 +83,7 @@ public class ReflectionRefractionTests {
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
 
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 
@@ -114,7 +116,7 @@ public class ReflectionRefractionTests {
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
 
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 
@@ -166,7 +168,7 @@ public class ReflectionRefractionTests {
                 .setImageWriter(new ImageWriter("refractionOurPicture", 500, 500)) //
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 }

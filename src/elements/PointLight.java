@@ -44,6 +44,11 @@ public class PointLight extends Light implements LightSource{
         return _position.distance(point);
     }
 
+    @Override
+    public Point3D getPosition() {
+        return _position;
+    }
+
     public PointLight setKc(double kC) {
         this.kC = kC;
         return this;

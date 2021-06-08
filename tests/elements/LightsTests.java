@@ -12,6 +12,9 @@ import scene.Scene;
  * @author Dan
  */
 public class LightsTests {
+
+    private double alpha = 10.0;
+
     private Scene scene1 = new Scene("Test scene");
     private Scene scene2 = new Scene("Test scene") //
             .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
@@ -43,7 +46,7 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
                 .setRayTracer(new BasicRayTracer(scene1));
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 
@@ -61,7 +64,7 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
                 .setRayTracer(new BasicRayTracer(scene1));
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 
@@ -79,7 +82,7 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
                 .setRayTracer(new BasicRayTracer(scene1));
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 
@@ -97,7 +100,7 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
                 .setRayTracer(new BasicRayTracer(scene2));
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 
@@ -116,7 +119,7 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
                 .setRayTracer(new BasicRayTracer(scene2));
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 
@@ -135,7 +138,7 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
                 .setRayTracer(new BasicRayTracer(scene2));
-        render.renderImage();
+        render.renderImage(alpha);
         render.writeToImage();
     }
 

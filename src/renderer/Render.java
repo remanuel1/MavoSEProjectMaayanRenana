@@ -61,14 +61,14 @@ public class Render {
     /**
      * to check if all params have a value
      */
-    public void renderImage(){
+    public void renderImage(double alpha){
         if(_camera == null || _imageWriter == null || _rayTracerBase== null){
             throw new IllegalArgumentException("need to put values in all fields");
         }
         for (int i=0; i<_imageWriter.getNy(); i++){
             for(int j=0; j<_imageWriter.getNx(); j++){
                 Ray ray = _camera.constructRayThroughPixel(_imageWriter.getNx(), _imageWriter.getNy(), j, i);
-                Color colorPixel = _rayTracerBase.traceRay(ray);
+                Color colorPixel = _rayTracerBase.traceRay(ray, alpha);
                 _imageWriter.writePixel(j,i, colorPixel);
             }
         }

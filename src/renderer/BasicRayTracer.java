@@ -15,6 +15,7 @@ public class BasicRayTracer extends RayTracerBase {
     private static final double INITIAL_K = 1.0;
     private static final int MAX_CALC_COLOR_LEVEL = 10;
     private static final double MIN_CALC_COLOR_K = 0.001;
+    private static final double PI = 3.141592653589793;
 
 
     /**
@@ -32,7 +33,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @return color of closest intersection point
      */
     @Override
-    public Color traceRay(Ray ray) {
+    public Color traceRay(Ray ray ,double alfa) {
 
         List<GeoPoint> allIntersections = _scene.geometries.findGeoIntersections(ray); //all intersection points
 
@@ -40,7 +41,7 @@ public class BasicRayTracer extends RayTracerBase {
             return Color.BLACK; // return black
         }
         GeoPoint closestPoint = ray.getClosestGeoPoint(allIntersections); // find the closest point
-        return calcColor(closestPoint, ray); // return the color of this closest point
+        return calcColor(closestPoint, ray, alfa); // return the color of this closest point
 
     }
 
@@ -49,8 +50,8 @@ public class BasicRayTracer extends RayTracerBase {
      * @param
      * @return color of this point
      */
-    private Color calcColor(GeoPoint geoPoint, Ray ray) {
-        return calcColor(geoPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K)
+    private Color calcColor(GeoPoint geoPoint, Ray ray ,double alfa) {
+        return calcColor(geoPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K, alfa)
                 .add(_scene._ambientLight.get_intensity());
     }
 
@@ -61,55 +62,29 @@ public class BasicRayTracer extends RayTracerBase {
      * @param k
      * @return
      */
-    private Color calcColor(GeoPoint geoPoint, Ray ray, int level, double k) {
+    private Color calcColor(GeoPoint geoPoint, Ray ray, int level, double k ,double alfa) {
         Color color = geoPoint.geometry.getEmission();
-        color = color.add(calcLocalEffects(geoPoint, ray, k));
-        return 1 == level ? color : color.add(calcGlobalEffects(geoPoint, ray.getDir(), level, k));
+        color = color.add(calcLocalEffects(geoPoint, ray, k, alfa));
+        return 1 == level ? color : color.add(calcGlobalEffects(geoPoint, ray.getDir(), level, k, alfa));
     }
 
-    /*private Color calcGlobalEffects(GeoPoint geoPoint, Ray ray, int level, double k) {
-        Color color = Color.BLACK;
-        Material material = geoPoint.geometry.getMaterial();
-        double kkr = k * material.kR;
-
-
-        if (kkr > MIN_CALC_COLOR_K) {
-            Ray reflectedRay = constructReflectedRay(geoPoint, ray);
-            List<GeoPoint> geoPointList1 = _scene.geometries.findGeoIntersections(reflectedRay);
-            GeoPoint reflectedPoint = reflectedRay.getClosestGeoPoint(_scene.geometries.findGeoIntersections(ray));
-            if (reflectedPoint != null) {
-                color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(material.kR));
-            }
-        }
-        double kkt = k * material.kT;
-        if (kkt > MIN_CALC_COLOR_K) {
-            Ray refractedRay = constructRefractedRay(geoPoint, ray);
-            List<GeoPoint> geoPointList2 = _scene.geometries.findGeoIntersections(refractedRay);
-            GeoPoint refractedPoint = refractedRay.getClosestGeoPoint(_scene.geometries.findGeoIntersections(ray));
-            if (refractedPoint != null) {
-                color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(material.kT));
-            }
-        }
-        return color;
-    }*/
-
-    private Color calcGlobalEffects(GeoPoint geoPoint, Vector v, int level, double k){
+    private Color calcGlobalEffects(GeoPoint geoPoint, Vector v, int level, double k ,double alfa){
         Color color = Color.BLACK;
         Vector n = geoPoint.geometry.getNormal(geoPoint.point);
         Material material = geoPoint.geometry.getMaterial();
         double kkr = k * material.kR;
         if (kkr > MIN_CALC_COLOR_K)
-            color = calcGlobalEffect(constructReflectedRay(geoPoint, v,n), level, material.kR, kkr);
+            color = calcGlobalEffect(constructReflectedRay(geoPoint, v,n), level, material.kR, kkr, alfa);
         double kkt = k * material.kT;
         if (kkt > MIN_CALC_COLOR_K)
             color = color.add(
-                    calcGlobalEffect(constructRefractedRay(geoPoint, v, n), level, material.kT, kkt));
+                    calcGlobalEffect(constructRefractedRay(geoPoint, v, n), level, material.kT, kkt, alfa));
         return color;
     }
 
-    private Color calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
+    private Color calcGlobalEffect(Ray ray, int level, double kx, double kkx, double alfa) {
         GeoPoint gp = ray.getClosestGeoPoint(_scene.geometries.findGeoIntersections(ray));
-        return (gp == null ? Color.BLACK.add(_scene._background).scale(kx) : calcColor(gp, ray, level-1, kkx)).scale(kx);
+        return (gp == null ? Color.BLACK.add(_scene._background).scale(kx) : calcColor(gp, ray, level-1, kkx, alfa)).scale(kx);
     }
 
     /**
@@ -143,7 +118,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @param ray
      * @return color with local effect.
      */
-    private Color calcLocalEffects(GeoPoint intersection, Ray ray, double k) {
+    private Color calcLocalEffects(GeoPoint intersection, Ray ray, double k, double alfa) {
         Vector v = ray.getDir(); //direction of ray
         Vector n = intersection.geometry.getNormal(intersection.point); //normal of geometry and intersection point
         double nv = alignZero(n.dotProduct(v)); // n*v
@@ -160,7 +135,7 @@ public class BasicRayTracer extends RayTracerBase {
             double nl = alignZero(n.dotProduct(l)); // n*l
             if (nl * nv > 0) { // sign(nl) == sing(nv)
                 //if (unshaded(lightSource, l, n, intersection)) {
-                double ktr = transparency(lightSource, l, n, intersection);
+                double ktr = callTransparency(lightSource, l, n, intersection, alfa);
                 if (ktr * k > MIN_CALC_COLOR_K) {
                     Color lightIntensity = lightSource.getIntensity(intersection.point).scale(ktr); // intensity of the light
                     // add all the local effect to the color
@@ -249,5 +224,46 @@ public class BasicRayTracer extends RayTracerBase {
         double factor = kd * Math.abs(l.dotProduct(n));
         return lightIntensity.scale(factor);
 
+    }
+
+    //////// Soft Shadow////////////////////////////
+
+    /**
+     *
+     * @param light
+     * @param l
+     * @param n
+     * @param geopoint
+     * @param angle
+     * @return
+     */
+    private double callTransparency(LightSource light, Vector l, Vector n, GeoPoint geopoint, double angle){
+        Point3D lightP0 = light.getPosition(); // p0 of the light
+        if(lightP0 == null || angle==0)  // if the light==direction light
+            return transparency(light, l, n, geopoint);
+
+        //calculate radius of the circle
+        double distance = lightP0.distance(geopoint.point); // distance between light and point
+        double radius = distance * Math.tan(Math.toRadians(angle)); // radius around the light
+        double sumKtr = 0; // sum of all ktr from random point around the light
+
+        //find points on the circle at the same plane.
+        Vector v = new Vector(-l.getHead().getY(),l.getHead().getX(),0).normalized(); // vector in the plane
+        Vector w=l.crossProduct(v); // vector ib the plane
+
+        //send ray to calculate and sum the ktr
+        for(int i=0; i<81;i++) { // find 81 point around the light
+
+            double t = 2 * PI * Math.random(); //
+            double r = radius * Math.random(); // radius random
+
+            double alpha = r * Math.cos(t); // parameter from random point
+            double beta = r * Math.sin(t); // parameter from random point
+
+            Point3D randomPoint = lightP0.add(v.scale(alpha).add(w.scale(beta))); //random point around light
+            Vector randomL = geopoint.point.subtract(randomPoint).normalized(); // random vector around light
+            sumKtr += transparency(light, randomL, n, geopoint); // sum of all ktr from random point around the light
+        }
+        return sumKtr/81; // average of ktr
     }
 }

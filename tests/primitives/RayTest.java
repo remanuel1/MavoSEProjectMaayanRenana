@@ -41,39 +41,69 @@ class RayTest {
     }
 
     @Test
-    void testGetClosestGeoPoint() {
-        List<GeoPoint> geoPoint = new LinkedList<>();
-        Ray ray = new Ray(new Point3D(0,0,0), new Vector(1,1,1));
-        GeoPoint g3 = new GeoPoint (new Triangle(new Point3D(2,2,3), new Point3D(3,0,0), new Point3D(0, 3, 0)), new Point3D(1.8,1.8,1.8));
-        GeoPoint g1 = new GeoPoint(new Sphere(2, new Point3D(2,2,3)), new Point3D(3.39, 3.39, 3.39));
-        GeoPoint g2 = new GeoPoint(new Sphere(2, new Point3D(2,2,3)), new Point3D(1.3, 1.3, 1.3));
-        geoPoint.add(g1);
-        geoPoint.add(g2);
-        geoPoint.add(g3);
+//    void testGetClosestGeoPoint() {
+//        List<GeoPoint> geoPoint = new LinkedList<>();
+//        Ray ray = new Ray(new Point3D(0,0,0), new Vector(1,1,1));
+//        GeoPoint g3 = new GeoPoint (new Triangle(new Point3D(2,2,3), new Point3D(3,0,0), new Point3D(0, 3, 0)), new Point3D(1.8,1.8,1.8));
+//        GeoPoint g1 = new GeoPoint(new Sphere(2, new Point3D(2,2,3)), new Point3D(3.39, 3.39, 3.39));
+//        GeoPoint g2 = new GeoPoint(new Sphere(2, new Point3D(2,2,3)), new Point3D(1.3, 1.3, 1.3));
+//        geoPoint.add(g1);
+//        geoPoint.add(g2);
+//        geoPoint.add(g3);
+//
+//
+//        // ============ Equivalence Partitions Tests ==============
+//        // TC01: closest point is found amidst the list of point
+//        assertEquals(ray.getClosestGeoPoint(geoPoint), g2, "getClosestGeoPoint not work");
+//
+//        // =============== Boundary Values Tests ==================
+//        // TC11: closest point is the first point
+//        geoPoint.clear();
+//        geoPoint.add(g2);
+//        geoPoint.add(g1);
+//        geoPoint.add(g3);
+//        assertEquals(ray.getClosestGeoPoint(geoPoint), g2, "getClosestGeoPoint not work");
+//
+//        // TC12: closest point is the last point
+//        geoPoint.clear();
+//        geoPoint.add(g3);
+//        geoPoint.add(g1);
+//        geoPoint.add(g2);
+//        assertEquals(ray.getClosestGeoPoint(geoPoint), g2, "getClosestGeoPoint not work");
+//
+//        // TC13: list is empty and there is no closest point
+//        geoPoint.clear();
+//        assertEquals(ray.getClosestGeoPoint(geoPoint), null, "getClosestGeoPoint not work");
+//
+//    }
 
+    public void testgetClosestGeoPoint() {
+        Ray ray1 = new Ray(new Point3D(0, 0, 10), new Vector(1, 10, -100));
+
+
+        List<GeoPoint> list = new LinkedList<GeoPoint>();
+        list.add(new GeoPoint(new Sphere(2, new Point3D(1,1,-100)),new Point3D(1, 1, -100)));
+        list.add(new GeoPoint( new Sphere(2, new Point3D(-1,1,-99)),new Point3D(-1, 1, -99)));
+        list.add(new GeoPoint(new Sphere(2, new Point3D(0,2,-10)),new Point3D(0, 2, -10)));
+        list.add(new GeoPoint(new Sphere(2, new Point3D(0.5,0,-100)),new Point3D(0.5, 0, -100)));
 
         // ============ Equivalence Partitions Tests ==============
-        // TC01: closest point is found amidst the list of point
-        assertEquals(ray.getClosestGeoPoint(geoPoint), g2, "getClosestGeoPoint not work");
+        //T01: A point in the middle of the list is closest to the beginning of the fund
+        assertEquals(new Point3D(0, 2, -10) ,ray1.getClosestGeoPoint(list).point, "point in the middle of the list");
 
         // =============== Boundary Values Tests ==================
-        // TC11: closest point is the first point
-        geoPoint.clear();
-        geoPoint.add(g2);
-        geoPoint.add(g1);
-        geoPoint.add(g3);
-        assertEquals(ray.getClosestGeoPoint(geoPoint), g2, "getClosestGeoPoint not work");
+        //T02: empty point list
+        List<GeoPoint> list2 = null;
+        assertNull(ray1.getClosestGeoPoint(list2), "empty point list");
 
-        // TC12: closest point is the last point
-        geoPoint.clear();
-        geoPoint.add(g3);
-        geoPoint.add(g1);
-        geoPoint.add(g2);
-        assertEquals(ray.getClosestGeoPoint(geoPoint), g2, "getClosestGeoPoint not work");
+        //T03: The first point is closest to the beginning of the foundation
+        Ray ray3 = new Ray(new Point3D(1, 1.5, -100), new Vector(1, 10, -100));
+        assertEquals(list.get(0) ,ray3.getClosestGeoPoint(list), "first point is closest");
 
-        // TC13: list is empty and there is no closest point
-        geoPoint.clear();
-        assertEquals(ray.getClosestGeoPoint(geoPoint), null, "getClosestGeoPoint not work");
+        //T04: The last point is closest to the beginning of the foundation
+        Ray ray4 = new Ray(new Point3D(0, 0, -100), new Vector(1, 10, -100));
+        assertEquals(list.get(3) ,ray4.getClosestGeoPoint(list), "last point is closest");
+
 
     }
 }

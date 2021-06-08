@@ -12,6 +12,8 @@ import scene.*;
  * @author Dan
  */
 public class RenderTest2 {
+
+    private double alpha = 10.0;
     private Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
             .setDistance(100) //
             .setViewPlaneSize(500, 500);
@@ -43,7 +45,7 @@ public class RenderTest2 {
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
 
-        render.renderImage();
+        render.renderImage(alpha);
         render.printGrid(100, new Color(java.awt.Color.YELLOW));
         render.writeToImage();
     }
@@ -64,7 +66,7 @@ public class RenderTest2 {
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
 
-        render.renderImage();
+        render.renderImage(alpha);
         render.printGrid(100, new Color(java.awt.Color.YELLOW));
         render.writeToImage();
     }
@@ -90,7 +92,7 @@ public class RenderTest2 {
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
 
-        render.renderImage();
+        render.renderImage(alpha);
         render.printGrid(100, new Color(java.awt.Color.WHITE));
         render.writeToImage();
     }
