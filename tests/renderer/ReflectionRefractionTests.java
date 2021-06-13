@@ -4,6 +4,7 @@ package renderer; /**
 
 
 import elements.*;
+import geometries.Plane;
 import geometries.Sphere;
 import geometries.Triangle;
 import org.junit.jupiter.api.Test;
@@ -166,6 +167,48 @@ public class ReflectionRefractionTests {
 
         Render render = new Render() //
                 .setImageWriter(new ImageWriter("refractionOurPicture", 500, 500)) //
+                .setCamera(camera) //
+                .setRayTracer(new BasicRayTracer(scene));
+        render.renderImage(alpha);
+        render.writeToImage();
+    }
+
+    /**
+     * Produce a picture of a sphere lighted by a spot light
+     */
+    @Test
+    public void ourPicture1() {
+        Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0,-1 ), new Vector(0, 1, 0)) //
+                .setViewPlaneSize(150, 150).setDistance(1000);
+
+        scene.geometries.add( //
+                new Plane(new Point3D(0, 0, 220), new Point3D(1, 0, 220), new Point3D(0, 1, 220)) // back
+                        .setEmission(new Color(java.awt.Color.ORANGE))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
+                new Plane(new Point3D(1, -0.5, 10), new Point3D(0, 1, 0), new Point3D(1, 1, 0)) // under
+                .setEmission(new Color(java.awt.Color.GREEN))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
+                new Plane(new Point3D(1, 0.5, 10), new Point3D(0, -1, 0), new Point3D(1, -1, 0)) // up
+                        .setEmission(new Color(java.awt.Color.BLUE))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
+
+                new Plane(new Point3D(50, 0, 0), new Point3D(50, 0, 20), new Point3D(50, 20, 0)) // right
+                        .setEmission(new Color(java.awt.Color.MAGENTA))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
+                new Plane(new Point3D(-50, 0, 0), new Point3D(-50, 0, 20), new Point3D(-50, 20, 0)) // left
+                        .setEmission(new Color(java.awt.Color.MAGENTA))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
+
+
+
+
+        scene.lights.add( //
+                new SpotLight(new Color(1000, 600, 0), new Point3D(0, 1000, -1000), new Vector(1, 1, 2)) //
+                        .setKl(0.0004).setKq(0.0000006));
+
+
+        Render render = new Render() //
+                .setImageWriter(new ImageWriter("refractionOurPicture1", 500, 500)) //
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
         render.renderImage(alpha);
