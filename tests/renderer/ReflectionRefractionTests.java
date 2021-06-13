@@ -181,30 +181,39 @@ public class ReflectionRefractionTests {
         Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0,-1 ), new Vector(0, 1, 0)) //
                 .setViewPlaneSize(150, 150).setDistance(1000);
 
-        scene.geometries.add( //
-                new Plane(new Point3D(0, 0, 220), new Point3D(1, 0, 220), new Point3D(0, 1, 220)) // back
-                        .setEmission(new Color(java.awt.Color.ORANGE))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
-                new Plane(new Point3D(1, -0.5, 10), new Point3D(0, 1, 0), new Point3D(1, 1, 0)) // under
-                .setEmission(new Color(java.awt.Color.GREEN))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
-                new Plane(new Point3D(1, 0.5, 10), new Point3D(0, -1, 0), new Point3D(1, -1, 0)) // up
+        scene.geometries.add(
+
+                new Plane(new Point3D(0,0,0), new Point3D(45,45,0),new Point3D(45,-45,0)) // back
+                        .setEmission(new Color(221,221,221))
+                        .setMaterial(new Material().setKs(0.8).setShininess(60)),
+                new Plane(new Point3D(45,-45,0), new Point3D(100,-45,0),new Point3D(100,-70,100)) // under
+                        .setEmission(new Color(221, 221, 221))
+                        .setMaterial(new Material().setKs(0.8).setShininess(60)),
+                new Plane(new Point3D(45,45,0), new Point3D(100,45,0),new Point3D(100,70,100)) // up
+                        .setEmission(new Color(221, 221, 221))
+                        .setMaterial(new Material().setKs(0.8).setShininess(60)),
+                new Plane(new Point3D(45,-45,0), new Point3D(45,-100,0),new Point3D(70,-100,100)) // right
                         .setEmission(new Color(java.awt.Color.BLUE))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
+                        .setMaterial(new Material().setKs(0.8).setShininess(60)),
+                new Plane(new Point3D(-45,45,0), new Point3D(-45,100,0),new Point3D(-70,100,100)) // left
+                        .setEmission(new Color(java.awt.Color.RED))
+                        .setMaterial(new Material().setKs(0.8).setShininess(60)),
+                new Sphere(2, new Point3D(0,40,150))
+                        .setEmission(new Color(java.awt.Color.RED))
+                        .setMaterial(new Material().setKs(0.8).setShininess(60)),
+                new Sphere(10, new Point3D(0,-40,100))
+                        .setEmission(new Color(java.awt.Color.ORANGE))
+                        .setMaterial(new Material().setKs(0.8).setShininess(60)));
 
-                new Plane(new Point3D(50, 0, 0), new Point3D(50, 0, 20), new Point3D(50, 20, 0)) // right
-                        .setEmission(new Color(java.awt.Color.MAGENTA))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
-                new Plane(new Point3D(-50, 0, 0), new Point3D(-50, 0, 20), new Point3D(-50, 20, 0)) // left
-                        .setEmission(new Color(java.awt.Color.MAGENTA))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
-
-
-
-
-        scene.lights.add( //
-                new SpotLight(new Color(1000, 600, 0), new Point3D(0, 1000, -1000), new Vector(1, 1, 2)) //
+        /*scene.lights.add(
+                new SpotLight(new Color(1000, 600, 0), new Point3D(0, 1000, -1000), new Vector(1, 1, 2))
                         .setKl(0.0004).setKq(0.0000006));
+        scene.lights.add(
+                new SpotLight(new Color(255, 0, 0), new Point3D(0, 40, 150), new Vector(0, 1, -4))
+                        .setKl(0.0004).setKq(0.0000006));*/
+        scene.lights.add(
+                new SpotLight(new Color(110, 100, 0), new Point3D(0, 35, 200), new Vector(0,0,2))
+                        .setKl(0.00004).setKq(0.0000001));
 
 
         Render render = new Render() //
