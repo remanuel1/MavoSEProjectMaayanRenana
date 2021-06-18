@@ -7,12 +7,12 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * class for Geometries
+ */
 public class Geometries implements Intersectable {
 
     private List<Intersectable> _intersectables = new LinkedList<>();
-
-    //public Geometries() {
-    //}
 
     public Geometries(Intersectable... geometries) {
         add(geometries);

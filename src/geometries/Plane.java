@@ -84,12 +84,12 @@ public class Plane extends Geometry {
 
         double mechane = alignZero(n.dotProduct(P0_Q0));
 
-        //
+        // mechane
         if (isZero(mechane)){
             return null;
         }
 
-        //mone
+        // mone
         double nv = alignZero(n.dotProduct(v));
 
         // ray is lying in the plane axis

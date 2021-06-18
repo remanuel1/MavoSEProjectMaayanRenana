@@ -10,38 +10,38 @@ import static primitives.Util.isZero;
  * there are point and vector
  */
 public class Ray {
-    private static final double DELTA = 0.1;
 
+    private static final double DELTA = 0.1; // DELTA To move the point a little
     final Point3D _p0;
     final Vector _dir;
 
-    //constructor
+    /**
+     * constructor
+     * @param p0
+     * @param dir
+     */
     public Ray(Point3D p0, Vector dir) {
         _dir = dir.normalize();
         _p0 = p0;
-        //double toNormal = Math.sqrt(p0._x._coord * p0._x._coord + p0._y._coord * p0._y._coord + p0._z._coord * p0._z._coord);
-        //if (toNormal!=1) {
-
-        //    double pXTemp = p0._x._coord * (1 / toNormal);
-        //    double pYTemp = p0._y._coord * (1 / toNormal);
-        //    double pZTemp = p0._z._coord * (1 / toNormal);
-       //     _p0 = new Point3D(pXTemp, pYTemp, pZTemp);
-       // }
-       // else
-
 
     }
 
+    /**
+     * constructor + move
+     * @param point
+     * @param direction
+     * @param n
+     */
     public Ray(Point3D point, Vector direction, Vector n) {
         Vector delta = n.scale(n.dotProduct(direction) > 0 ? DELTA : - DELTA);
         _p0= point.add(delta);
         _dir=direction.normalized();
     }
 
+    // getter func
     public Point3D getP0() {
         return _p0;
     }
-
     public Point3D getPoint(double delta ) {
         if (isZero(delta)) {
             return _p0;

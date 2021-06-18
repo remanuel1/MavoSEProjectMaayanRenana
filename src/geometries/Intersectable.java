@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * i
+ * Interface
  */
 public interface Intersectable {
 

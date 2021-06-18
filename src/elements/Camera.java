@@ -6,6 +6,10 @@ import primitives.Vector;
 
 import static primitives.Util.*;
 
+/**
+ * class of camera
+ * Sets the position and distance of the camera
+ */
 
 public class Camera {
     final Point3D _p0;
@@ -17,24 +21,30 @@ public class Camera {
     private double _height;
 
 
+    /**
+     * constructor that getting Starting point and direction vectors
+     * @param p0
+     * @param vT0
+     * @param vUp
+     */
     public Camera(Point3D p0, Vector vT0, Vector vUp) {
         _p0 = p0;
-        _vT0 = vT0.normalized();
-        _vUp = vUp.normalized();
-        if(!isZero(_vT0.dotProduct(_vUp))) {
+        _vT0 = vT0.normalized(); // normalized the vector
+        _vUp = vUp.normalized(); // normalized the vector
+        if(!isZero(_vT0.dotProduct(_vUp))) { // check if vTo and vUp orthogonal
             throw new IllegalArgumentException("vTo and vUp not orthogonal");
         }
-        _vRight = _vT0.crossProduct(_vUp);
+        _vRight = _vT0.crossProduct(_vUp); // if vTo and vUp orthogonal, vT0.crossProduct(_vUp)
     }
+
+    // getter func
 
     public Point3D getP0() {
         return _p0;
     }
-
     public Vector getvT0() {
         return _vT0;
     }
-
     public Vector getvUp() { return _vUp; }
 
     public Vector getvRight() {
@@ -70,17 +80,16 @@ public class Camera {
      * @param nY - height
      * @param j - num pixels in column
      * @param i -  num pixels in row
-     * @return ray that Through in pixel
+     * @return ray that through in pixel
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i){
-        Point3D Pc = _p0.add(_vT0.scale(_distance));
+        Point3D Pc = _p0.add(_vT0.scale(_distance)); // calculation of pc
         double Ry = _height / nY;
         double Rx = _width / nX;
-        double Yi = -(i-(nY-1)/2d)*Ry;
-        double Xj = (j-(nX-1)/2d)*Rx;
+        double Yi = -(i-(nY-1)/2d) * Ry;
+        double Xj = (j-(nX-1)/2d) * Rx;
 
         Point3D Pij = Pc;
-
         if(isZero(Yi) && isZero(Xj)) {
             // Pij = Pc
             return new Ray(_p0, Pij.subtract(_p0));

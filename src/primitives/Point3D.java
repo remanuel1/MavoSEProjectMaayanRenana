@@ -10,7 +10,12 @@ public class Point3D {
 
     public final static Point3D ZERO = new Point3D(0, 0, 0);
 
-    //constructor
+    /**
+     * constructor
+     * @param x
+     * @param y
+     * @param z
+     */
     public Point3D(double x, double y, double z) {
         //this(new Coordinate(x), new Coordinate(y), new Coordinate(z));
         _x = new Coordinate(x);
@@ -19,6 +24,11 @@ public class Point3D {
     }
 
 
+    /**
+     * equals
+     * @param o
+     * @return if equals or not
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -32,7 +42,11 @@ public class Point3D {
         return "(" + _x + "," + ", " + _z + ")";
     }
 
-    //subtract func. return new vector this-pt2
+    /**
+     * subtract func. return new vector this-pt2
+     * @param pt2
+     * @return
+     */
     public Vector subtract(Point3D pt2) {
         Point3D head = new Point3D(
                 _x._coord - pt2._x._coord,
@@ -46,7 +60,11 @@ public class Point3D {
         return new Vector(head);
     }
 
-    //add func. return new point this+v
+    /**
+     * add func. return new point this+v
+     * @param v
+     * @return
+     */
     public Point3D add(Vector v) {
         Point3D p = new Point3D(
                 _x._coord + v._head._x._coord,
@@ -56,7 +74,12 @@ public class Point3D {
         return p;
     }
 
-    //distance Squared func. return x^2 + Y^2 + Z^2
+
+    /**
+     * distance Squared func. return x^2 + Y^2 + Z^2
+     * @param p
+     * @return
+     */
     public double distanceSquared(Point3D p) {
         return (_x._coord - p._x._coord) * (_x._coord - p._x._coord) +
                 (_y._coord - p._y._coord) * (_y._coord - p._y._coord) +
@@ -64,19 +87,23 @@ public class Point3D {
 
     }
 
-    // distance func. return sqrt of distanceSquared
+
+    /**
+     * distance func. return sqrt of distanceSquared
+     * @param p
+     * @return
+     */
     public double distance(Point3D p) {
         return Math.sqrt(distanceSquared(p));
     }
 
+    // getter func
     public double getX() {
         return _x._coord;
     }
-
     public double getY() {
         return _y._coord;
     }
-
     public double getZ() {
         return _z._coord;
     }

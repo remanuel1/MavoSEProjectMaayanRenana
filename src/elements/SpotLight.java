@@ -18,6 +18,11 @@ public class SpotLight extends PointLight {
         this.direction = direction.normalized();
     }
 
+    /**
+     *
+     * @param p
+     * @return intensity*factor
+     */
     @Override
     public Color getIntensity(Point3D p) {
        Color intensity= super.getIntensity(p);

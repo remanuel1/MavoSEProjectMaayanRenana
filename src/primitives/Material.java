@@ -61,10 +61,18 @@ public class Material {
         return this;
     }
 
+    /**
+     *
+     * @return kT
+     */
     public double getKt() {
         return kT;
     }
 
+    /**
+     *
+     * @return kS
+     */
     public double getKs() {
         return kS;
     }

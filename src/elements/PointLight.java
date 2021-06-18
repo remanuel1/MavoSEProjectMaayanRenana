@@ -9,7 +9,8 @@ import primitives.Vector;
  */
 public class PointLight extends Light implements LightSource{
 
-    private final Point3D _position;
+    private final Point3D _position; // p0
+    // for attenuation with distance
     private double kC = 1;
     private double kL = 0;
     private double kQ = 0;
@@ -24,6 +25,7 @@ public class PointLight extends Light implements LightSource{
         _position = position;
     }
 
+    // getter func
     @Override
     public Color getIntensity(Point3D p) {
         double denominator, distance;
@@ -38,7 +40,6 @@ public class PointLight extends Light implements LightSource{
             return null;
         return p.subtract(_position).normalized();
     }
-
     @Override
     public double getDistance(Point3D point) {
         return _position.distance(point);
@@ -49,6 +50,8 @@ public class PointLight extends Light implements LightSource{
         return _position;
     }
 
+
+    // setter func
     public PointLight setKc(double kC) {
         this.kC = kC;
         return this;

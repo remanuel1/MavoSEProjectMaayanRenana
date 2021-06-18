@@ -85,7 +85,7 @@ public class Sphere extends Geometry {
 
         // take only t1, t2 > 0
         // both bigger than 0
-        if (t1 > 0 && t2 > 0 && alignZero(t1 - maxDistance) <= 0 && alignZero(t2 - maxDistance) <= 0) {
+        if (t1 > 0 && t2 > 0 && alignZero(t1 - maxDistance) <= 0 && alignZero(t2 - maxDistance) <= 0){
             Point3D p1 = P0.add(v.scale(t1));
             Point3D p2 = P0.add(v.scale(t2));
             return List.of(new GeoPoint(this, p1), new GeoPoint(this, p2));

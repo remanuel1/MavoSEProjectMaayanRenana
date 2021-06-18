@@ -12,12 +12,19 @@ import java.util.List;
 
 public class Triangle extends Polygon{
 
-    //constructor
+    /**
+     * constructor
+     * @param vertices
+     */
     public Triangle(Point3D... vertices) {
         super(vertices);
     }
 
 
+    /**
+     * toString
+     * @return
+     */
     @Override
     public String toString() {
         return "Triangle{" +
