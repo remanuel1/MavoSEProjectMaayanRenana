@@ -291,7 +291,7 @@ public class ReflectionRefractionTests {
                     .setCamera(camera)
                     .setMultithreading(3) // Multithreading
                     .setRayTracer(new BasicRayTracer(scene));
-                render.renderImage(7); // alpha of the improvement of soft shadow
+                render.renderImage(5); // alpha of the improvement of soft shadow
                 render.writeToImage();
     }
 
